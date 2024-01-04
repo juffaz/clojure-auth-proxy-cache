@@ -28,9 +28,6 @@ If you wish to contribute to the project, please read CONTRIBUTING.md for additi
 ## License
 
 This project is licensed under the MIT License.
-**LICENSE:** Файл с текстом лицензии, под которой распространяется ваш проект.
+**LICENSE:** 
 
-Выберите текст и формат лицензии в соответствии с вашими предпочтениями.
-
-Теперь, когда у вас есть эти файлы, вы можете создать новый репозиторий в GitHub и загрузить их туда.
 
