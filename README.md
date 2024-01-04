@@ -21,17 +21,14 @@ The application will be available at http://localhost:8080.
 
 Customize the AUTH_SERVICE_URL and CACHE_TTL_SECONDS environment variables to specify the URL of the authorization service and the cache TTL, respectively.
 
-Contributing
+## Contributing
 
 If you wish to contribute to the project, please read CONTRIBUTING.md for additional information.
-License
+
+## License
 
 This project is licensed under the MIT License.
-
-markdown
-
-
-6. **LICENSE:** Файл с текстом лицензии, под которой распространяется ваш проект.
+**LICENSE:** Файл с текстом лицензии, под которой распространяется ваш проект.
 
 Выберите текст и формат лицензии в соответствии с вашими предпочтениями.
 
