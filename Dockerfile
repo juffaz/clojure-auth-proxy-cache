@@ -18,3 +18,5 @@ COPY . /app
 ENV CACHE_TTL_SECONDS=3600
 
 CMD ["lein", "run"]
+
+
