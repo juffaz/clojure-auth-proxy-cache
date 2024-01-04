@@ -32,9 +32,3 @@ jobs:
           tags: yuvenaliyt/clojure-auth-proxy-cache:latest
           secrets: 
             "TELETOK=${{ secrets.TELETOK }}"
-      -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }} 
-      -  
-        name: check teletok
-        run: echo 1
