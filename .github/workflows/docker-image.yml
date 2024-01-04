@@ -18,8 +18,20 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        docker build . --file Dockerfile --tag your-docker-hub-username/your-image-name:latest
-        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        docker pull yuvenaliyt/clojure-auth-proxy-cache:latest
-        
+      -  
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        #env:
+         # TELETOK: ${{ secrets.TELETOK }}
+        with:
+          push: true
+          tags: yuvenaliyt/clojure-auth-proxy-cache:latest
+          secrets: 
+            "TELETOK=${{ secrets.TELETOK }}"
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }} 
+      -  
+        name: check teletok
+        run: echo 1
