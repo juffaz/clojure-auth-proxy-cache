@@ -1,27 +1,40 @@
-name: Docker Image CI
+name: ci
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  docker:
+    runs-on: ubuntu:latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Build and Push Docker Image
-      run: |
-        docker buildx create --use
-        docker buildx inspect
-        docker buildx build . --file Dockerfile --tag yuvenaliyt/clojure-auth-proxy-cache:latest --push
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -  
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        #env:
+         # TELETOK: ${{ secrets.TELETOK }}
+        with:
+          push: true
+          tags: yuvenaliyt/clojure-auth-proxy-cache:latest
+          secrets: 
+            "TELETOK=${{ secrets.TELETOK }}"
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }} 
+      -  
+        name: check teletok
+        run: echo 1
