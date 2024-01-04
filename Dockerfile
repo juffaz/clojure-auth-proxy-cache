@@ -1,10 +1,11 @@
 # Dockerfile
-FROM clojure:openjdk-11
+####FROM clojure:openjdk-11
+FROM clojure:openjdk-11-lein-2.9.8-bullseye
 
 # Устанавливаем Leiningen
-RUN curl -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
-    chmod +x /usr/local/bin/lein && \
-    lein
+#RUN curl -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
+#    chmod +x /usr/local/bin/lein && \
+#    lein
 
 WORKDIR /app
 
