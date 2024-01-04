@@ -13,6 +13,8 @@ This is a simple Clojure application designed to cache tokens obtained from an a
    ```bash
    docker build -t clojure-auth-proxy .
 
+   
+
 ## Run Docker Container:
 
 bash# docker run -p 8080:8080 -e AUTH_SERVICE_URL=http://your-auth-service-url -e CACHE_TTL_SECONDS=10800 clojure-auth-proxy
