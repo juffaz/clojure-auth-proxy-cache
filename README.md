@@ -15,9 +15,10 @@ This is a simple Clojure application designed to cache tokens obtained from an a
 
    
 
-## Run Docker Container:
+2. **Run Docker Container:**
 
-bash# docker run -p 8080:8080 -e AUTH_SERVICE_URL=http://your-auth-service-url -e CACHE_TTL_SECONDS=10800 clojure-auth-proxy
+   ```bash
+   docker run -p 8080:8080 -e AUTH_SERVICE_URL=http://your-auth-service-url -e CACHE_TTL_SECONDS=10800 clojure-auth-proxy
 
 The application will be available at http://localhost:8080.
 
