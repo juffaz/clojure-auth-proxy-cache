@@ -1,6 +1,11 @@
 # Dockerfile
 FROM clojure:openjdk-11
 
+# Устанавливаем Leiningen
+RUN curl -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
+    chmod +x /usr/local/bin/lein && \
+    lein
+
 WORKDIR /app
 
 COPY project.clj /app/
@@ -8,7 +13,7 @@ RUN lein deps
 
 COPY . /app
 
-# Pass CACHE_TTL_SECONDS as an environment variable with a default value of 3600
+# Передаем CACHE_TTL_SECONDS как переменную окружения со значением по умолчанию 3600
 ENV CACHE_TTL_SECONDS=3600
 
 CMD ["lein", "run"]
