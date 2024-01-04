@@ -20,3 +20,20 @@ bash# docker run -p 8080:8080 -e AUTH_SERVICE_URL=http://your-auth-service-url -
 The application will be available at http://localhost:8080.
 
 Customize the AUTH_SERVICE_URL and CACHE_TTL_SECONDS environment variables to specify the URL of the authorization service and the cache TTL, respectively.
+
+Contributing
+
+If you wish to contribute to the project, please read CONTRIBUTING.md for additional information.
+License
+
+This project is licensed under the MIT License.
+
+markdown
+
+
+6. **LICENSE:** Файл с текстом лицензии, под которой распространяется ваш проект.
+
+Выберите текст и формат лицензии в соответствии с вашими предпочтениями.
+
+Теперь, когда у вас есть эти файлы, вы можете создать новый репозиторий в GitHub и загрузить их туда.
+
