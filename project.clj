@@ -4,4 +4,4 @@
                  [org.clojure/core.cache "0.7.1"]
                  [clj-http "3.11.0"]
                  [org.clojure/tools.logging "1.1.0"]]
-  :main your-namespace.auth-proxy)
+  :main clj-auth-cache.auth-proxy)
