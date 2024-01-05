@@ -55,7 +55,7 @@
                   (add-cache-headers {:status 400
                                       :body "Authentication failed. Invalid username or password."})))
               (add-cache-headers {:status 400
-                                  :body "Bad Request. Provide both username and password."}))))
+                                  :body "Bad Request. Provide both username and password."})))))))
       wrap-params
       wrap-json-body
       wrap-json-response))
