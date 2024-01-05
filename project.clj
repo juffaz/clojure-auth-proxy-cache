@@ -12,3 +12,5 @@
   :profiles
   {:uberjar {:aot :all
              :omit-source true}})
+
+
