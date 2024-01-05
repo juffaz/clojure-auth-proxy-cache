@@ -49,5 +49,4 @@
   (let [port (Integer. (or (System/getenv "PORT") "8080"))]
     (jetty/run-jetty (wrap-params app) {:port port})))
 
-;; Запуск веб-сервера при старте приложения
-(-main)
+
