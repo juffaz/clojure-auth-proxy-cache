@@ -23,3 +23,5 @@ ENV JVM_OPTS="-Xms256m -Xmx512m"
 
 # Запустите ваше приложение
 CMD ["lein", "run"]
+
+
