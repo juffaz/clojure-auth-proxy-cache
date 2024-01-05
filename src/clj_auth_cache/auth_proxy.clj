@@ -1,4 +1,5 @@
-(ns clj-auth-cache.auth_proxy
+(ns clj-auth-cache.auth-proxy
+  (:gen-class)
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.params :refer [wrap-params]]
             [clojure.core.cache :as cache]
