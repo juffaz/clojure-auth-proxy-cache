@@ -30,7 +30,8 @@
         username (get params "userName")
         password (get params "password")
         auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
-        (log/info (str "Your Clojure Auth Proxy is running with auth service at: " auth-url))
+        (log/info (str "Received request with username: " username " and password: " password))
+        (log/info (str "Auth service URL: " auth-url))   
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
