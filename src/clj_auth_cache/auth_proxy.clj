@@ -24,21 +24,21 @@
 
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
-  (let [params (:params request)
-        username (get params "userName")
-        password (get params "password")
+  (let [body-json (-> request :body json/parse-string true)
+        username (get body-json "userName")
+        password (get body-json "password")
         auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
-        (log/info (str "Received request with raw parameters: " params))
-        (log/info (str "Extracted username: " username " and password: " password))
-        (log/info (str "Auth service URL: " auth-url))
+    (log/info (str "Received request with JSON body: " body-json))
+    (log/info (str "Extracted username: " username " and password: " password))
+    (log/info (str "Auth service URL: " auth-url))
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
-          (let [body-json (json/parse-string (:body token-response) true)
-                cached-data {:clientIdentifier (:clientIdentifier body-json)
-                             :userName (:userName body-json)
-                             :userBranch (:userBranch body-json)
-                             :systemDate (:systemDate body-json)}]
+          (let [auth-response-body (json/parse-string (:body token-response) true)
+                cached-data {:clientIdentifier (:clientIdentifier auth-response-body)
+                             :userName (:userName auth-response-body)
+                             :userBranch (:userBranch auth-response-body)
+                             :systemDate (:systemDate auth-response-body)}]
             (swap! data-cache assoc username cached-data)
             (add-cache-headers {:status 200
                                 :headers {"Content-Type" "application/json"}
@@ -47,6 +47,7 @@
                               :body "Authentication failed. Invalid username or password."})))
       (add-cache-headers {:status 400
                           :body "Bad Request. Provide both username and password."}))))
+
 
 ;; Функция для старта веб-сервера
 (defn -main []
