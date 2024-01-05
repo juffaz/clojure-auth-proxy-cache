@@ -12,7 +12,7 @@
 (def data-cache (atom (cache/ttl-cache-factory {:ttl 3600})))
 
 (defn get-auth-token [username password auth-url]
-  (let [url (str auth-url "/auth/userauth")
+  (let [url (str auth-url "/userauth")
         body (json/generate-string {:userName username :password password})
         response (http/post {:url url :body body :content-type :json})]
     response))
