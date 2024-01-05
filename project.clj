@@ -1,6 +1,6 @@
 (defproject clj-auth-cache "0.1.0-SNAPSHOT"
   :description "Clojure Auth Cache Proxy"
-  :dependencies [[org.clojure/clojure "1.10.5"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  [ring/ring-core "1.11.0"]
                  [ring/ring-jetty-adapter "1.11.0"]
                  [clj-http "3.12.0"]
