@@ -22,16 +22,15 @@
           "Content-Type" "application/json"
           "Cache-Control" "public, max-age=3600"))
 
-
-
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
   (let [params (:params request)
         username (get params "userName")
         password (get params "password")
         auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
-        (log/info (str "Received request with username: " username " and password: " password))
-        (log/info (str "Auth service URL: " auth-url))   
+        (log/info (str "Received request with raw parameters: " params))
+        (log/info (str "Extracted username: " username " and password: " password))
+        (log/info (str "Auth service URL: " auth-url))
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
