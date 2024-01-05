@@ -37,7 +37,7 @@
                              :userName (:userName body-json)
                              :userBranch (:userBranch body-json)
                              :systemDate (:systemDate body-json)}]
-            (swap! data-cache #(cache/put % username cached-data))
+            (swap! data-cache assoc username cached-data)
             (add-cache-headers {:status 200
                                 :headers {"Content-Type" "application/json"}
                                 :body (:body token-response)}))
