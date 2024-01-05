@@ -7,7 +7,7 @@
                  [org.clojure/tools.logging "0.4.1"]
                  [cheshire "5.10.0"]
                  [org.clojure/core.cache "1.0.217"]]
-  :main ^:skip-aot clj-auth-cache.auth-proxy
+  :main ^:skip-aot clj-auth-cache.auth_proxy
   :target-path "target/%s"
   :profiles
   {:uberjar {:aot :all
