@@ -32,12 +32,12 @@
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
-          (let [body-json (json/parse-string true (:body token-response))
+          (let [body-json (json/parse-string (:body token-response) true)
                 cached-data {:clientIdentifier (:clientIdentifier body-json)
                              :userName (:userName body-json)
                              :userBranch (:userBranch body-json)
                              :systemDate (:systemDate body-json)}]
-            (swap! data-cache cache/assoc username cached-data)
+            (swap! data-cache #(cache/put % username cached-data))
             (add-cache-headers {:status 200
                                 :headers {"Content-Type" "application/json"}
                                 :body (:body token-response)}))
