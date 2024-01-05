@@ -20,7 +20,8 @@
 
 ;; Функция для добавления HTTP-заголовков к ответу
 (defn add-cache-headers [response]
-  (response/assoc (response/header response "Cache-Control" "public, max-age=3600")))
+  (assoc response :headers (assoc (:headers response) "Cache-Control" "public, max-age=3600")))
+
 
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
