@@ -5,6 +5,7 @@
             [clojure.core.cache :as cache]
             [clj-http.client :as http]
             [cheshire.core :as json]
+            [ring.util.response :as response]
             [clojure.tools.logging :as log]))
 
 ;; Кэш для хранения данных
@@ -13,13 +14,13 @@
 ;; Функция для обращения к auth сервису и получения токена
 (defn get-auth-token [username password auth-url]
   (let [url (str auth-url "/auth/userauth")
-        body (json/generate-string {:userName username :password password})
+        body (json/write-str {:userName username :password password})
         response (http/post {:url url :body body :content-type :json})]
     response))
 
 ;; Функция для добавления HTTP-заголовков к ответу
 (defn add-cache-headers [response]
-  (assoc response :headers (assoc (:headers response) "Cache-Control" "public, max-age=3600")))
+  (response/assoc (response/header response "Cache-Control" "public, max-age=3600")))
 
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
@@ -49,4 +50,5 @@
   (let [port (Integer. (or (System/getenv "PORT") "8080"))]
     (jetty/run-jetty (wrap-params app) {:port port})))
 
-
+;; Запуск веб-сервера при старте приложения
+(-main)
