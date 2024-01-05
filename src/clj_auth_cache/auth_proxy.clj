@@ -14,7 +14,7 @@
 ;; Функция для обращения к auth сервису и получения токена
 (defn get-auth-token [username password auth-url]
   (let [url (str auth-url "/auth/userauth")
-        body (json/write-str {:userName username :password password})
+        body (json/generate-string {:userName username :password password})
         response (http/post {:url url :body body :content-type :json})]
     response))
 
