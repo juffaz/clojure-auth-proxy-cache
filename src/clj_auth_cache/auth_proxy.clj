@@ -29,7 +29,7 @@
   (let [params (:params request)
         username (get params "userName")
         password (get params "password")
-        auth-url "http://your-auth-service-url"]
+        auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
