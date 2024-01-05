@@ -15,11 +15,7 @@ WORKDIR /app
 COPY project.clj .
 COPY src/ src/
 
-# Установка более новой версии Leiningen
-RUN lein upgrade
-
 # Выполните lein deps, чтобы установить зависимости
-
 RUN lein deps
 
 # Определите переменные окружения JVM_OPTS
