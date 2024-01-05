@@ -6,7 +6,7 @@
                  [clj-http "3.12.0"]
                  [org.clojure/tools.logging "0.4.1"]
                  [cheshire "5.10.0"]
-                 [org.clojure/core.cache "0.14.0"]]
+                 [org.clojure/core.cache "1.0.217"]]
   :main ^:skip-aot clj-auth-cache.auth-proxy
   :target-path "target/%s"
   :profiles
