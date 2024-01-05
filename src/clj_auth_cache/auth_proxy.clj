@@ -12,11 +12,11 @@
 (def data-cache (atom (cache/ttl-cache-factory {:ttl 3600})))
 
 ;; Функция для обращения к auth сервису и получения токена
-(defn get-auth-token [username password auth-url]
-  (let [url (str auth-url "/auth/userauth")
-        body (json/generate-string {:userName username :password password})
-        response (http/post {:url url :body body :content-type :json})]
-    response))
+(defn add-cache-headers [response]
+  (update response :headers assoc
+          "Content-Type" "application/json"
+          "Cache-Control" "public, max-age=3600"))
+
 
 ;; Функция для добавления HTTP-заголовков к ответу
 (defn add-cache-headers [response]
