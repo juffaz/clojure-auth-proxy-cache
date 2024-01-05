@@ -32,7 +32,7 @@
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
-          (let [body-json (json/read-str true (:body token-response))
+          (let [body-json (json/parse-string true (:body token-response))
                 cached-data {:clientIdentifier (:clientIdentifier body-json)
                              :userName (:userName body-json)
                              :userBranch (:userBranch body-json)
@@ -44,7 +44,7 @@
           (add-cache-headers {:status 400
                               :body "Authentication failed. Invalid username or password."})))
       (add-cache-headers {:status 400
-                          :body "Bad Request. Provide both username and password."})))
+                          :body "Bad Request. Provide both username and password."}))))
 
 ;; Функция для старта веб-сервера
 (defn -main []
