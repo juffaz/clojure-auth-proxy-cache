@@ -14,6 +14,7 @@ WORKDIR /app
 # Скопируйте зависимости и код в образ
 COPY project.clj .
 COPY src/ src/
+COPY resources/ resources/
 
 # Выполните lein deps, чтобы установить зависимости
 RUN lein deps
