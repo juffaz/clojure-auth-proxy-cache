@@ -1,22 +1,18 @@
-# Dockerfile
-####FROM clojure:openjdk-11
-FROM clojure:openjdk-11-lein-2.9.8-bullseye
+# Используйте базовый образ Clojure
+FROM clojure:openjdk-11-lein-2.9.6
 
-# Устанавливаем Leiningen
-#RUN curl -o /usr/local/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
-#    chmod +x /usr/local/bin/lein && \
-#    lein
-
+# Установите рабочую директорию в /app
 WORKDIR /app
 
-COPY project.clj /app/
+# Скопируйте зависимости и код в образ
+COPY project.clj .
+COPY src/ src/
+
+# Выполните lein deps, чтобы установить зависимости
 RUN lein deps
 
-COPY . /app
+# Определите переменные окружения JVM_OPTS
+ENV JVM_OPTS="-Xms256m -Xmx512m"
 
-# Передаем CACHE_TTL_SECONDS как переменную окружения со значением по умолчанию 3600
-ENV CACHE_TTL_SECONDS=3600
-
+# Запустите ваше приложение
 CMD ["lein", "run"]
-
-
