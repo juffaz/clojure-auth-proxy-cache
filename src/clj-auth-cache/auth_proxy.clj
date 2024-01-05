@@ -16,6 +16,10 @@
         response (http/post {:url url :body body :content-type :json})]
     response))
 
+;; Функция для добавления HTTP-заголовков к ответу
+(defn add-cache-headers [response]
+  (response/assoc (response/header response "Cache-Control" "public, max-age=3600")))
+
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
   (let [params (:params request)
@@ -31,13 +35,13 @@
                              :userBranch (:userBranch body-json)
                              :systemDate (:systemDate body-json)}]
             (swap! data-cache cache/assoc username cached-data)
-            {:status 200
-             :headers {"Content-Type" "application/json"}
-             :body (:body token-response)})
-          {:status 400
-           :body "Authentication failed. Invalid username or password."}))
-      {:status 400
-       :body "Bad Request. Provide both username and password."})))
+            (add-cache-headers {:status 200
+                                :headers {"Content-Type" "application/json"}
+                                :body (:body token-response)}))
+          (add-cache-headers {:status 400
+                              :body "Authentication failed. Invalid username or password."})))
+      (add-cache-headers {:status 400
+                          :body "Bad Request. Provide both username and password."})))
 
 ;; Функция для старта веб-сервера
 (defn -main []
