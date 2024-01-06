@@ -24,33 +24,35 @@
 
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
-  (try
-    (let [body-json (-> request :body slurp json/parse-string)]
-      (log/info (str "Received request with JSON body: " body-json))
-      (let [username (get-in body-json [:userName])
-            password (get-in body-json [:password])
-            auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
-        (log/info (str "Extracted username: " username " and password: " password))
-        (log/info (str "Auth service URL: " auth-url))
-        (if (and username password)
-          (let [token-response (get-auth-token username password auth-url)]
-            (if (= 200 (:status token-response))
-              (let [body-json (json/parse-string (:body token-response) true)
-                    cached-data {:clientIdentifier (:clientIdentifier body-json)
-                                 :userName (:userName body-json)
-                                 :userBranch (:userBranch body-json)
-                                 :systemDate (:systemDate body-json)}]
-                (swap! data-cache assoc username cached-data)
-                (add-cache-headers {:status 200
-                                    :headers {"Content-Type" "application/json"}
-                                    :body (:body token-response)}))
-              (add-cache-headers {:status 400
-                                  :body "Authentication failed. Invalid username or password."})))
-          (add-cache-headers {:status 400
-                              :body "Bad Request. Provide both username and password."})))
+  (do
+    (try
+      (let [body-json (-> request :body slurp json/parse-string)]
+        (log/info (str "Received request with JSON body: " body-json))
+        (let [username (get-in body-json [:userName])
+              password (get-in body-json [:password])
+              auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
+          (log/info (str "Extracted username: " username " and password: " password))
+          (log/info (str "Auth service URL: " auth-url))
+          (if (and username password)
+            (let [token-response (get-auth-token username password auth-url)]
+              (if (= 200 (:status token-response))
+                (let [body-json (json/parse-string (:body token-response) true)
+                      cached-data {:clientIdentifier (:clientIdentifier body-json)
+                                   :userName (:userName body-json)
+                                   :userBranch (:userBranch body-json)
+                                   :systemDate (:systemDate body-json)}]
+                  (swap! data-cache assoc username cached-data)
+                  (add-cache-headers {:status 200
+                                      :headers {"Content-Type" "application/json"}
+                                      :body (:body token-response)}))
+                (add-cache-headers {:status 400
+                                    :body "Authentication failed. Invalid username or password."})))
+            (add-cache-headers {:status 400
+                                :body "Bad Request. Provide both username and password."})))
     (catch Exception e
       (log/error "Error parsing JSON" e)
-      (add-cache-headers {:status 400 :body "Malformed JSON in request body"})))))
+      (add-cache-headers {:status 400 :body "Malformed JSON in request body"}))))))
+
 
 
 ;; Функция для старта веб-сервера
