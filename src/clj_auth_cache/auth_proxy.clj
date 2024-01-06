@@ -1,6 +1,7 @@
 (ns clj-auth-cache.auth-proxy
   (:gen-class)
   (:require [ring.adapter.jetty :as jetty]
+            [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [clojure.core.cache :as cache]
             [clj-http.client :as http]
@@ -24,13 +25,13 @@
 
 ;; Основная функция для обработки HTTP-запросов
 (defn app [request]
-  (let [body-json (-> request :body slurp json/parse-string)
-        username (get-in body-json [:userName])
-        password (get-in body-json [:password])
+  (let [params (:body request)
+        username (get params "userName")
+        password (get params "password")
         auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
-    (log/info (str "Received request with JSON body: " body-json))
-    (log/info (str "Extracted username: " username " and password: " password))
-    (log/info (str "Auth service URL: " auth-url))
+        (log/info (str "Received request with raw parameters: " params))
+        (log/info (str "Extracted username: " username " and password: " password))
+        (log/info (str "Auth service URL: " auth-url))
     (if (and username password)
       (let [token-response (get-auth-token username password auth-url)]
         (if (= 200 (:status token-response))
