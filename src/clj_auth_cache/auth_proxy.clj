@@ -28,7 +28,7 @@
   (let [params (:body request)
         username (get params "userName")
         password (get params "password")
-        auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://your-default-auth-service-url")]
+        auth-url (or (System/getenv "AUTH_SERVICE_URL") "http://apigw.service.test-consul/gni/auth")]
         (log/info (str "Received request with raw parameters: " params))
         (log/info (str "Extracted username: " username " and password: " password))
         (log/info (str "Auth service URL: " auth-url))
@@ -55,4 +55,3 @@
 (defn -main []
   (let [port (Integer. (or (System/getenv "PORT") "8080"))]
     (jetty/run-jetty #'handler {:port port :join? false})))
-    
