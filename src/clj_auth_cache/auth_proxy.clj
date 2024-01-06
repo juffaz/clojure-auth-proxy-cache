@@ -15,12 +15,13 @@
 (defn get-auth-token [username password auth-url]
   (let [url (str auth-url "/userauth")
         body (json/generate-string {:userName username :password password})
-        response (http/post {:url url :body body :content-type :json})]
+        response (http/post url {:body body :content-type :json})]
     response))
 
 (defn add-cache-headers [response]
   (update response :headers assoc
-          "Content-Type" "application/json"
+          "Content-Type" "application/json
+          "Cache-Name" "Clojure"
           "Cache-Control" "public, max-age=3600"))
 
 ;; Основная функция для обработки HTTP-запросов
