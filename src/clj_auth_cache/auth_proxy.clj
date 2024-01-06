@@ -50,7 +50,7 @@
                               :body "Bad Request. Provide both username and password."})))
     (catch Exception e
       (log/error "Error parsing JSON" e)
-      (add-cache-headers {:status 400 :body "Malformed JSON in request body"})))))
+      (add-cache-headers {:status 400 :body "Malformed JSON in request body"}))))
 
 
 ;; Функция для старта веб-сервера
