@@ -52,4 +52,4 @@
 ;; Функция для старта веб-сервера
 (defn -main []
   (let [port (Integer. (or (System/getenv "PORT") "8080"))]
-    (jetty/run-jetty (wrap-params app) {:port port})))
+    (jetty/run-jetty (wrap-json-body app) {:port port})))
